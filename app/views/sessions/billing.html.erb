@@ -1,0 +1,5 @@
+<% @str.each do |result| %> 
+  <% if result.xpath("name").text.strip == "responseCode" %>
+    <%= result.xpath("value").text.strip == "0" %>   
+  <% end %>
+<% end %>
