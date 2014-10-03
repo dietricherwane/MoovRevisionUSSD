@@ -22,11 +22,11 @@ class SessionsController < ApplicationController
             store_academic_level
           end
         else
-          @response = Error.session_expired
+          @response = Error.session_expired(@screen_id)
         end
       end
     else
-      @response = Error.parameters_uninitialized
+      @response = Error.parameters_uninitialized(@screen_id)
     end
     
     send_response
@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
   #private
   # Check initialization of request parameters
   def params_initialized(params)
-    if params[:sc].blank? || invalid_msisdn(params[:msisdn]) || params[:req_no].blank? || params[:session_id].blank? || invalid_user_input_or_req_no(params[:user_input], params[:req_no])
+    if params[:sc].blank? || invalid_msisdn(params[:msisdn]) || params[:req_no].blank? || params[:session_id].blank? || invalid_user_input_or_req_no(params[:user_input], params[:req_no]) || params[:screen_id].blank?
       false
     else
       # Set class variables
@@ -43,7 +43,8 @@ class SessionsController < ApplicationController
       @msisdn = params[:msisdn]
       @user_input = params[:user_input].to_i
       @session_id = params[:session_id]
-      @req_no = params[:req_no].to_i     
+      @req_no = params[:req_no].to_i   
+      @screen_id = params[:screen_id]  
       true
     end   
   end
@@ -61,7 +62,7 @@ class SessionsController < ApplicationController
   # When req_no == 1
   def initialize_session
     Session.create(sc: @sc, msisdn: @msisdn, session_id: @session_id, req_no: @req_no)
-    @response = Registration.subscription_selection
+    @response = Registration.subscription_selection(@screen_id)
   end
   
   # Select an existing session and sets the correct req_no
@@ -87,14 +88,14 @@ class SessionsController < ApplicationController
     set_user_input
     if @user_input == 0
       @session.update_attributes(subscription_id: nil)
-      @response = Registration.subscription_selection
+      @response = Registration.subscription_selection(@screen_id)
     else
       @subscription = Subscription.find_by_ussd_id(@user_input)
       if @subscription
         @session.update_attributes(subscription_id: @subscription.id, req_no: @req_no)
-        @response = Registration.question_type_selection
+        @response = Registration.question_type_selection(@screen_id)
       else
-        @response = Error.invalid_subscription_period
+        @response = Error.invalid_subscription_period(@screen_id)
       end
     end
   end
@@ -103,19 +104,19 @@ class SessionsController < ApplicationController
   def select_question_type
     set_user_input
     if @user_input == 0      
-      @response = Registration.question_type_selection
+      @response = Registration.question_type_selection(@screen_id)
       @session.update_attributes(question_type_id: nil, req_no: @req_no - 1)
     else
       @question_type = QuestionType.find_by_ussd_id(@user_input)
       if @question_type
         @session.update_attributes(question_type_id: @question_type.id, req_no: @req_no)
         if URI.escape(@question_type.name) == URI.escape("Révision scolaire")
-          @response = Registration.select_academic_level
+          @response = Registration.select_academic_level(@screen_id)
         else       
-          @response = Registration.confirm_registration(@session)
+          @response = Registration.confirm_registration(@session, @screen_id)
         end
       else
-        @response = Error.invalid_question_type
+        @response = Error.invalid_question_type(@screen_id)
       end
     end
   end
@@ -134,14 +135,14 @@ class SessionsController < ApplicationController
     set_user_input
     if @user_input == 0 
       @session.update_attributes(academic_level_id: nil, req_no: @req_no - 1)
-      @response = Registration.select_academic_level
+      @response = Registration.select_academic_level(@screen_id)
     else
       @academic_level = AcademicLevel.find_by_ussd_id(@user_input)
       if @academic_level
         @session.update_attributes(academic_level_id: @academic_level.id, req_no: @req_no)
-        @response = Registration.confirm_registration(@session)
+        @response = Registration.confirm_registration(@session, @screen_id)
       else
-        @response = Error.invalid_academic_level_choice
+        @response = Error.invalid_academic_level_choice(@screen_id)
       end
     end
   end
@@ -153,17 +154,18 @@ class SessionsController < ApplicationController
         # Billing
         billing
         if user_billed
-          create_account 
+          @response = Registration.validate_registration(@screen_id) 
+          #create_account 
           #if account_created             
             #send first question
           #end
         else
-          @response = Error.billing
+          @response = Error.billing(@screen_id)
         end
       when 2
-        @response = Registration.cancel_registration
+        @response = Registration.cancel_registration(@screen_id)
       else
-        @response = Error.invalid_registration_validation_choice
+        @response = Error.invalid_registration_validation_choice(@screen_id)
       end
   end
   
@@ -178,13 +180,13 @@ class SessionsController < ApplicationController
     request.on_complete do |response|
       if response.success?
         @response = response.body
-        #@response = Registration.validate_registration  
+        #@response = Registration.validate_registration(@screen_id)  
       elsif response.timed_out?
-        @response = Error.timeout
+        @response = Error.timeout(@screen_id)
       elsif response.code == 0
-        @response = Error.no_http_response
+        @response = Error.no_http_response(@screen_id)
       else
-        @response = Error.non_successful_http_response
+        @response = Error.non_successful_http_response(@screen_id)
         @response = response.body
       end
     end
@@ -205,23 +207,24 @@ class SessionsController < ApplicationController
     
     request = Typhoeus::Request.new(parameter.billing_url, followlocation: true, body: billing_request_body, headers: {Accept: "text/xml", :'Content-length' => billing_request_body.bytesize, Authorization: "Basic base64_encode('NGSER-MR2014:NGSER-MR2014')", :'User-Agent' => user_agent})
 
-#=begin
+=begin
     request.on_complete do |response|
       if response.success?
         result = response.body  
       elsif response.timed_out?
-        result = Error.timeout
+        result = Error.timeout(@screen_id)
       elsif response.code == 0
-        result = Error.no_http_response
+        result = Error.no_http_response(@screen_id)
       else
-        result = Error.non_successful_http_response
+        result = Error.non_successful_http_response(@screen_id)
       end
     end
 
     request.run
-#=end
-
-    @xml = Nokogiri.XML(result).xpath('//methodResponse//params//param//value//struct//member')
+=end
+    #response_body
+    @xml = Nokogiri.XML(Billing.response_body).xpath('//methodResponse//params//param//value//struct//member')
+    #@xml = Nokogiri.XML(result).xpath('//methodResponse//params//param//value//struct//member')
     #render text: Billing.response_body.bytesize
   end
   

@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   end
   
   def send_response
-    render text: URI.escape(@response)
+    render xml: @response
   end
 end
