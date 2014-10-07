@@ -155,10 +155,10 @@ class SessionsController < ApplicationController
         billing
         if user_billed
           @response = Registration.validate_registration(@screen_id) 
-          #create_account 
-          #if account_created             
-            #send first question
-          #end
+          create_account 
+          if account_created             
+            send_first_question
+          end
         else
           @response = Error.billing(@screen_id)
         end
@@ -175,7 +175,7 @@ class SessionsController < ApplicationController
   
   def create_account
     parameter = Parameter.first
-    request = Typhoeus::Request.new(parameter.sms_gateway_url, followlocation: true, method: :post, params: {msisdn: @session.msisdn, subscription_id: @session.subscription_id, question_type_id: @session.question_type_id, academic_level_id: @session.academic_level_id, session_id: @session.session_id})
+    request = Typhoeus::Request.new(parameter.sms_gateway_url, followlocation: true, method: :post, params: {msisdn: @session.msisdn, subscription_id: @session.subscription_id, question_type_id: @session.question_type_id, academic_level_id: @session.academic_level_id, session_id: @session.session_id, screen_id: @screen_id})
 
     request.on_complete do |response|
       if response.success?
@@ -187,7 +187,7 @@ class SessionsController < ApplicationController
         @response = Error.no_http_response(@screen_id)
       else
         @response = Error.non_successful_http_response(@screen_id)
-        @response = response.body
+        #@response = response.body
       end
     end
 
@@ -196,7 +196,7 @@ class SessionsController < ApplicationController
   
   # Checks if the account have been succesfully created after notifying the sms_gateway
   def account_created
-    @response == URI.escape(Registration.validate_registration) ? true : false
+    URI.escape(@response) == URI.escape(Registration.validate_registration(@screen_id)) ? true : false
   end
   
   # Bill customer from moov billing platform
@@ -224,7 +224,7 @@ class SessionsController < ApplicationController
 =end
     #response_body
     @xml = Nokogiri.XML(Billing.response_body).xpath('//methodResponse//params//param//value//struct//member')
-    #@xml = Nokogiri.XML(result).xpath('//methodResponse//params//param//value//struct//member')
+    #@xml = Nokogiri.XML(result).xpath('//methodResponse//params//param//value//struct//member') rescue nil
     #render text: Billing.response_body.bytesize
   end
   
@@ -241,6 +241,26 @@ class SessionsController < ApplicationController
         end
       end
     end
+  end
+  
+  def send_first_question
+    request = Typhoeus::Request.new("localhost:4001/question/registration/send/#{@session.msisdn}/#{@session.academic_level_id.to_i}", followlocation: true, method: :get)
+
+    request.on_complete do |response|
+      if response.success?
+        #@response = response.body
+        #@response = Registration.validate_registration(@screen_id)  
+      elsif response.timed_out?
+        #@response = Error.timeout(@screen_id)
+      elsif response.code == 0
+        #@response = Error.no_http_response(@screen_id)
+      else
+        #@response = Error.non_successful_http_response(@screen_id)
+        #@response = response.body
+      end
+    end
+
+    request.run
   end
   
 end

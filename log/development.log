@@ -21047,3 +21047,515 @@ Processing by SessionsController#index as HTML
   [1m[36mSubscription Load (6.9ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1[0m  [["id", 2]]
   [1m[35mParameter Load (15.7ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
 Completed 200 OK in 240ms (Views: 0.2ms | ActiveRecord: 64.6ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=0&session_id=3gfgddufgh&req_no=1" for 127.0.0.1 at 2014-10-07 05:39:11 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (6.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"0", "session_id"=>"3gfgddufgh", "req_no"=>"1"}
+Completed 200 OK in 36ms (Views: 0.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=0&session_id=3gfgddufgh&req_no=1&screen_id=1" for 127.0.0.1 at 2014-10-07 05:39:48 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"0", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"1"}
+  [1m[35m (0.7ms)[0m  BEGIN
+  [1m[36mSQL (51.2ms)[0m  [1mINSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", Tue, 07 Oct 2014 05:39:48 UTC +00:00], ["msisdn", "0022540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 05:39:48 UTC +00:00]]
+  [1m[35m (64.3ms)[0m  COMMIT
+Completed 200 OK in 204ms (Views: 0.3ms | ActiveRecord: 121.5ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=2&session_id=3gfgddufgh&req_no=2&screen_id=2" for 127.0.0.1 at 2014-10-07 05:40:08 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"2"}
+  [1m[36mSession Load (2.8ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (2.3ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 38[0m  [["user_input", 2], ["updated_at", Tue, 07 Oct 2014 05:40:08 UTC +00:00]]
+  [1m[35m (156.5ms)[0m  COMMIT
+  [1m[36mSubscription Load (23.4ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 2 LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (1.6ms)[0m  [1mUPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 38[0m  [["subscription_id", 2], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 05:40:08 UTC +00:00]]
+  [1m[35m (48.0ms)[0m  COMMIT
+Completed 200 OK in 282ms (Views: 0.2ms | ActiveRecord: 240.9ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=2&session_id=3gfgddufgh&req_no=3&screen_id=3" for 127.0.0.1 at 2014-10-07 05:40:22 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"3"}
+  [1m[36mSession Load (0.9ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestionType Load (1.5ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 2 LIMIT 1
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  UPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 38  [["question_type_id", 2], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 05:40:22 UTC +00:00]]
+  [1m[36m (56.6ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestionType Load (1.1ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36mSubscription Load (1.3ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1[0m  [["id", 2]]
+Completed 200 OK in 114ms (Views: 0.2ms | ActiveRecord: 67.4ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 05:40:52 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[35mSession Load (1.3ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36mQuestionType Load (0.7ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (0.9ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 38[0m  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 05:40:52 UTC +00:00]]
+  [1m[35m (40.9ms)[0m  COMMIT
+  [1m[36mSubscription Load (0.9ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35mParameter Load (1.8ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+ETHON: Libcurl initialized
+ETHON: performed EASY effective_url=http://10.179.17.75:10010/Air response_code=0 return_code=couldnt_connect total_time=0.0
+Completed 200 OK in 132ms (Views: 0.2ms | ActiveRecord: 51.9ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=1&session_id=3gfgddufgh&req_no=1&screen_id=1" for 127.0.0.1 at 2014-10-07 05:53:42 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"1"}
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["created_at", Tue, 07 Oct 2014 05:53:42 UTC +00:00], ["msisdn", "0022540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 05:53:42 UTC +00:00]]
+  [1m[36m (273.6ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 307ms (Views: 0.3ms | ActiveRecord: 278.7ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=3&session_id=3gfgddufgh&req_no=2&screen_id=2" for 127.0.0.1 at 2014-10-07 05:53:58 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"3", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"2"}
+  [1m[35mSession Load (1.0ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.3ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 39  [["user_input", 3], ["updated_at", Tue, 07 Oct 2014 05:53:58 UTC +00:00]]
+  [1m[36m (44.2ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (1.1ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 3 LIMIT 1
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  UPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 39  [["subscription_id", 3], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 05:53:58 UTC +00:00]]
+  [1m[36m (44.6ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 134ms (Views: 0.2ms | ActiveRecord: 99.1ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=2&session_id=3gfgddufgh&req_no=3&screen_id=3" for 127.0.0.1 at 2014-10-07 05:54:43 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"3"}
+  [1m[35mSession Load (1.0ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 39  [["user_input", 2], ["updated_at", Tue, 07 Oct 2014 05:54:43 UTC +00:00]]
+  [1m[36m (95.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestionType Load (0.7ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 2 LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  UPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 39  [["question_type_id", 2], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 05:54:43 UTC +00:00]]
+  [1m[36m (63.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestionType Load (1.0ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36mSubscription Load (0.9ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1[0m  [["id", 3]]
+Completed 200 OK in 200ms (Views: 0.3ms | ActiveRecord: 168.8ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 05:54:59 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[35mSession Load (1.2ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36mQuestionType Load (0.8ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36mSQL (0.7ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 39[0m  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 05:54:59 UTC +00:00]]
+  [1m[35m (46.8ms)[0m  COMMIT
+  [1m[36mSubscription Load (1.0ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1[0m  [["id", 3]]
+  [1m[35mParameter Load (0.9ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+ETHON: performed EASY effective_url=http://10.179.17.75:10010/Air response_code=0 return_code=couldnt_connect total_time=0.0
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=0022540498869&subscription_id=3&question_type_id=2&academic_level_id=&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=4.059166
+ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/0022540498869/ response_code=404 return_code=ok total_time=0.036045
+Completed 200 OK in 4192ms (Views: 0.2ms | ActiveRecord: 57.1ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=1&session_id=3gfgddufgh&req_no=1&screen_id=4" for 127.0.0.1 at 2014-10-07 06:02:35 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"4"}
+  [1m[35m (0.8ms)[0m  BEGIN
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", Tue, 07 Oct 2014 06:02:35 UTC +00:00], ["msisdn", "0022540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 06:02:35 UTC +00:00]]
+  [1m[35m (65.8ms)[0m  COMMIT
+Completed 200 OK in 100ms (Views: 0.3ms | ActiveRecord: 73.3ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=1&session_id=3gfgddufgh&req_no=2&screen_id=4" for 127.0.0.1 at 2014-10-07 06:02:44 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"4"}
+  [1m[36mSession Load (1.0ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36mSQL (1.3ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 40[0m  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 06:02:44 UTC +00:00]]
+  [1m[35m (41.9ms)[0m  COMMIT
+  [1m[36mSubscription Load (1.3ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 1 LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (1.5ms)[0m  [1mUPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 40[0m  [["subscription_id", 1], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 06:02:44 UTC +00:00]]
+  [1m[35m (52.4ms)[0m  COMMIT
+Completed 200 OK in 197ms (Views: 0.4ms | ActiveRecord: 106.1ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=2&session_id=3gfgddufgh&req_no=3&screen_id=4" for 127.0.0.1 at 2014-10-07 06:02:52 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"4"}
+  [1m[36mSession Load (0.9ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (1.0ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 40[0m  [["user_input", 2], ["updated_at", Tue, 07 Oct 2014 06:02:52 UTC +00:00]]
+  [1m[35m (48.0ms)[0m  COMMIT
+  [1m[36mQuestionType Load (0.9ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 2 LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (1.5ms)[0m  [1mUPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 40[0m  [["question_type_id", 2], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 06:02:52 UTC +00:00]]
+  [1m[35m (47.5ms)[0m  COMMIT
+  [1m[36mQuestionType Load (0.9ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35mSubscription Load (0.8ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 1]]
+Completed 200 OK in 139ms (Views: 0.2ms | ActiveRecord: 106.2ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=0022540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 06:03:03 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"0022540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[36mSession Load (1.4ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35mQuestionType Load (1.0ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 40  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 06:03:03 UTC +00:00]]
+  [1m[36m (44.1ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (1.2ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mParameter Load (0.9ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+ETHON: performed EASY effective_url=http://10.179.17.75:10010/Air response_code=0 return_code=couldnt_connect total_time=0.0
+  [1m[35mCACHE (0.0ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=0022540498869&subscription_id=1&question_type_id=2&academic_level_id=&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.179955
+ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/0022540498869/0 response_code=500 return_code=ok total_time=0.056999
+Completed 200 OK in 332ms (Views: 0.3ms | ActiveRecord: 54.6ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=568974551111&user_input=1&session_id=3gfgddufgh&req_no=1&screen_id=4" for 127.0.0.1 at 2014-10-07 10:14:34 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (21.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"568974551111", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"4"}
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (85.7ms)[0m  [1mINSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", Tue, 07 Oct 2014 10:14:34 UTC +00:00], ["msisdn", "568974551111"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 10:14:34 UTC +00:00]]
+  [1m[35m (64.5ms)[0m  COMMIT
+Completed 200 OK in 266ms (Views: 0.4ms | ActiveRecord: 156.8ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=568974551111&user_input=2&session_id=3gfgddufgh&req_no=2&screen_id=4" for 127.0.0.1 at 2014-10-07 10:14:47 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"568974551111", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"4"}
+  [1m[36mSession Load (20.6ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (2.1ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 41[0m  [["user_input", 2], ["updated_at", Tue, 07 Oct 2014 10:14:47 UTC +00:00]]
+  [1m[35m (49.2ms)[0m  COMMIT
+  [1m[36mSubscription Load (7.3ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 2 LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (1.5ms)[0m  [1mUPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 41[0m  [["subscription_id", 2], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 10:14:47 UTC +00:00]]
+  [1m[35m (51.7ms)[0m  COMMIT
+Completed 200 OK in 200ms (Views: 0.4ms | ActiveRecord: 139.4ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=1&screen_id=4" for 127.0.0.1 at 2014-10-07 10:15:37 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"4"}
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["created_at", Tue, 07 Oct 2014 10:15:37 UTC +00:00], ["msisdn", "22540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 10:15:37 UTC +00:00]]
+  [1m[36m (40.8ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 46ms (Views: 0.2ms | ActiveRecord: 42.4ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=2&screen_id=4" for 127.0.0.1 at 2014-10-07 10:15:46 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"4"}
+  [1m[35mSession Load (1.0ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 42  [["user_input", 2], ["updated_at", Tue, 07 Oct 2014 10:15:46 UTC +00:00]]
+  [1m[36m (41.7ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (1.1ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 2 LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  UPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 42  [["subscription_id", 2], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 10:15:46 UTC +00:00]]
+  [1m[36m (48.6ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 105ms (Views: 0.2ms | ActiveRecord: 95.3ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=3&screen_id=4" for 127.0.0.1 at 2014-10-07 10:15:51 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"4"}
+  [1m[35mSession Load (0.9ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36mQuestionType Load (1.5ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 2 LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (1.4ms)[0m  [1mUPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 42[0m  [["question_type_id", 2], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 10:15:51 UTC +00:00]]
+  [1m[35m (61.1ms)[0m  COMMIT
+  [1m[36mQuestionType Load (1.8ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35mSubscription Load (1.7ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 2]]
+Completed 200 OK in 115ms (Views: 0.2ms | ActiveRecord: 73.3ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 10:16:00 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[36mSession Load (0.8ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35mQuestionType Load (0.5ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 42  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 10:16:00 UTC +00:00]]
+  [1m[36m (39.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (1.2ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36mParameter Load (21.4ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+ETHON: Libcurl initialized
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 10:17:49 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (1.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[35mSession Load (2.6ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36mQuestionType Load (4.7ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (2.0ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36mParameter Load (1.9ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+ETHON: Libcurl initialized
+ETHON: performed EASY effective_url=http://10.179.17.75:10010/Air response_code=0 return_code=couldnt_connect total_time=127.281717
+  [1m[35mCACHE (0.0ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=22540498869&subscription_id=2&question_type_id=2&academic_level_id=&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.40845
+ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/22540498869/0 response_code=500 return_code=ok total_time=0.458753
+Completed 200 OK in 128309ms (Views: 0.2ms | ActiveRecord: 69.4ms)
+ETHON: performed EASY effective_url=http://10.179.17.75:10010/Air response_code=0 return_code=couldnt_connect total_time=127.259929
+  [1m[35mCACHE (0.1ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=22540498869&subscription_id=2&question_type_id=2&academic_level_id=&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.039603
+Completed 200 OK in 127514ms (Views: 0.2ms | ActiveRecord: 34.0ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=1&screen_id=4" for 127.0.0.1 at 2014-10-07 10:20:59 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"4"}
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (3.4ms)[0m  INSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["created_at", Tue, 07 Oct 2014 10:20:59 UTC +00:00], ["msisdn", "22540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 10:20:59 UTC +00:00]]
+  [1m[36m (44.2ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 128ms (Views: 0.3ms | ActiveRecord: 53.5ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=2&screen_id=4" for 127.0.0.1 at 2014-10-07 10:21:05 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"4"}
+  [1m[35mSession Load (0.9ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 43  [["user_input", 2], ["updated_at", Tue, 07 Oct 2014 10:21:05 UTC +00:00]]
+  [1m[36m (49.8ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (0.6ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 2 LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.5ms)[0m  UPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 43  [["subscription_id", 2], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 10:21:05 UTC +00:00]]
+  [1m[36m (51.1ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 139ms (Views: 0.2ms | ActiveRecord: 109.4ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=3&screen_id=4" for 127.0.0.1 at 2014-10-07 10:21:11 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"4"}
+  [1m[35mSession Load (1.0ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36mQuestionType Load (0.8ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 2 LIMIT 1[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+  [1m[36mSQL (1.7ms)[0m  [1mUPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 43[0m  [["question_type_id", 2], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 10:21:11 UTC +00:00]]
+  [1m[35m (103.1ms)[0m  COMMIT
+  [1m[36mQuestionType Load (1.0ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35mSubscription Load (0.8ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 2]]
+Completed 200 OK in 143ms (Views: 0.2ms | ActiveRecord: 113.0ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 10:21:23 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[36mSession Load (1.1ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35mQuestionType Load (0.7ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 43  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 10:21:23 UTC +00:00]]
+  [1m[36m (43.2ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (0.9ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36mParameter Load (1.0ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+ETHON: performed EASY effective_url=http://10.179.17.75:10010/Air response_code=0 return_code=couldnt_connect total_time=127.238374
+  [1m[35mCACHE (0.1ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=22540498869&subscription_id=2&question_type_id=2&academic_level_id=&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.218163
+ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/22540498869/0 response_code=500 return_code=ok total_time=0.05895700000000004
+Completed 200 OK in 127611ms (Views: 0.4ms | ActiveRecord: 53.0ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=1&screen_id=4" for 127.0.0.1 at 2014-10-07 10:24:07 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"4"}
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.4ms)[0m  INSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["created_at", Tue, 07 Oct 2014 10:24:07 UTC +00:00], ["msisdn", "22540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 10:24:07 UTC +00:00]]
+  [1m[36m (48.1ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 79ms (Views: 0.2ms | ActiveRecord: 55.0ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=2&screen_id=4" for 127.0.0.1 at 2014-10-07 10:24:14 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"4"}
+  [1m[35mSession Load (1.7ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 44  [["user_input", 2], ["updated_at", Tue, 07 Oct 2014 10:24:14 UTC +00:00]]
+  [1m[36m (49.0ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (0.8ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 2 LIMIT 1
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  UPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 44  [["subscription_id", 2], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 10:24:14 UTC +00:00]]
+  [1m[36m (48.5ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 142ms (Views: 0.4ms | ActiveRecord: 108.6ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=2&session_id=3gfgddufgh&req_no=3&screen_id=4" for 127.0.0.1 at 2014-10-07 10:24:18 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"2", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"4"}
+  [1m[35mSession Load (0.9ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36mQuestionType Load (0.9ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 2 LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (1.6ms)[0m  [1mUPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 44[0m  [["question_type_id", 2], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 10:24:18 UTC +00:00]]
+  [1m[35m (52.8ms)[0m  COMMIT
+  [1m[36mQuestionType Load (1.1ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 2]]
+  [1m[35mSubscription Load (0.9ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 2]]
+Completed 200 OK in 153ms (Views: 0.3ms | ActiveRecord: 64.0ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 10:24:27 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[36mSession Load (0.9ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35mQuestionType Load (0.6ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  UPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 44  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 10:24:27 UTC +00:00]]
+  [1m[36m (114.1ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (1.3ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 2]]
+  [1m[36mParameter Load (0.9ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+  [1m[35mCACHE (0.1ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=22540498869&subscription_id=2&question_type_id=2&academic_level_id=&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.286711
+ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/22540498869/0 response_code=500 return_code=ok total_time=0.067216
+Completed 200 OK in 519ms (Views: 0.2ms | ActiveRecord: 123.8ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=1&screen_id=4" for 127.0.0.1 at 2014-10-07 12:16:42 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"4"}
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (5.7ms)[0m  [1mINSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", Tue, 07 Oct 2014 12:16:42 UTC +00:00], ["msisdn", "22540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 12:16:42 UTC +00:00]]
+  [1m[35m (64.8ms)[0m  COMMIT
+Completed 200 OK in 174ms (Views: 0.2ms | ActiveRecord: 77.5ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=2&screen_id=4" for 127.0.0.1 at 2014-10-07 12:16:52 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"4"}
+  [1m[36mSession Load (1.4ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (1.4ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 45[0m  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 12:16:52 UTC +00:00]]
+  [1m[35m (284.4ms)[0m  COMMIT
+  [1m[36mSubscription Load (1.4ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 1 LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36mSQL (1.9ms)[0m  [1mUPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 45[0m  [["subscription_id", 1], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 12:16:52 UTC +00:00]]
+  [1m[35m (41.1ms)[0m  COMMIT
+Completed 200 OK in 373ms (Views: 0.2ms | ActiveRecord: 337.9ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=3&screen_id=4" for 127.0.0.1 at 2014-10-07 12:17:02 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"4"}
+  [1m[36mSession Load (1.1ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestionType Load (1.4ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 1 LIMIT 1
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.8ms)[0m  UPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 45  [["question_type_id", 1], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 12:17:02 UTC +00:00]]
+  [1m[36m (38.5ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 75ms (Views: 0.4ms | ActiveRecord: 49.3ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 12:17:08 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[35mSession Load (1.2ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36mQuestionType Load (1.3ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mAcademicLevel Load (1.1ms)[0m  SELECT "academic_levels".* FROM "academic_levels" WHERE "academic_levels"."ussd_id" = 1 LIMIT 1
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  UPDATE "sessions" SET "academic_level_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 45  [["academic_level_id", 1], ["req_no", 4], ["updated_at", Tue, 07 Oct 2014 12:17:08 UTC +00:00]]
+  [1m[36m (82.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (2.1ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mAcademicLevel Load (1.5ms)[0m  [1mSELECT "academic_levels".* FROM "academic_levels" WHERE "academic_levels"."id" = $1 LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 141ms (Views: 0.3ms | ActiveRecord: 95.6ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=5&screen_id=4" for 127.0.0.1 at 2014-10-07 12:17:17 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"5", "screen_id"=>"4"}
+  [1m[35mSession Load (1.2ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36mSubscription Load (0.8ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mParameter Load (1.0ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+  [1m[36mCACHE (0.1ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+ETHON: Libcurl initialized
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=22540498869&subscription_id=1&question_type_id=1&academic_level_id=1&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.370917
+ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/22540498869/1 response_code=200 return_code=ok total_time=0.481611
+Completed 200 OK in 889ms (Views: 0.4ms | ActiveRecord: 6.6ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=1&screen_id=4" for 127.0.0.1 at 2014-10-07 12:21:40 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"1", "screen_id"=>"4"}
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36mSQL (0.9ms)[0m  [1mINSERT INTO "sessions" ("created_at", "msisdn", "req_no", "sc", "session_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", Tue, 07 Oct 2014 12:21:40 UTC +00:00], ["msisdn", "22540498869"], ["req_no", 1], ["sc", "bxcb"], ["session_id", "3gfgddufgh"], ["updated_at", Tue, 07 Oct 2014 12:21:40 UTC +00:00]]
+  [1m[35m (34.3ms)[0m  COMMIT
+Completed 200 OK in 40ms (Views: 0.2ms | ActiveRecord: 35.6ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=2&screen_id=4" for 127.0.0.1 at 2014-10-07 12:21:46 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"2", "screen_id"=>"4"}
+  [1m[36mSession Load (1.1ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36mSQL (0.9ms)[0m  [1mUPDATE "sessions" SET "user_input" = $1, "updated_at" = $2 WHERE "sessions"."id" = 46[0m  [["user_input", 1], ["updated_at", Tue, 07 Oct 2014 12:21:46 UTC +00:00]]
+  [1m[35m (46.4ms)[0m  COMMIT
+  [1m[36mSubscription Load (0.9ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."ussd_id" = 1 LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36mSQL (1.3ms)[0m  [1mUPDATE "sessions" SET "subscription_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 46[0m  [["subscription_id", 1], ["req_no", 2], ["updated_at", Tue, 07 Oct 2014 12:21:46 UTC +00:00]]
+  [1m[35m (39.1ms)[0m  COMMIT
+Completed 200 OK in 98ms (Views: 0.1ms | ActiveRecord: 90.6ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=3&screen_id=4" for 127.0.0.1 at 2014-10-07 12:21:49 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"3", "screen_id"=>"4"}
+  [1m[36mSession Load (1.1ms)[0m  [1mSELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mQuestionType Load (0.6ms)[0m  SELECT "question_types".* FROM "question_types" WHERE "question_types"."ussd_id" = 1 LIMIT 1
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  UPDATE "sessions" SET "question_type_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 46  [["question_type_id", 1], ["req_no", 3], ["updated_at", Tue, 07 Oct 2014 12:21:49 UTC +00:00]]
+  [1m[36m (91.4ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 102ms (Views: 0.1ms | ActiveRecord: 95.1ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=4&screen_id=4" for 127.0.0.1 at 2014-10-07 12:21:52 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"4", "screen_id"=>"4"}
+  [1m[35mSession Load (1.4ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36mQuestionType Load (1.0ms)[0m  [1mSELECT "question_types".* FROM "question_types" WHERE "question_types"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35mAcademicLevel Load (0.9ms)[0m  SELECT "academic_levels".* FROM "academic_levels" WHERE "academic_levels"."ussd_id" = 1 LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.4ms)[0m  UPDATE "sessions" SET "academic_level_id" = $1, "req_no" = $2, "updated_at" = $3 WHERE "sessions"."id" = 46  [["academic_level_id", 1], ["req_no", 4], ["updated_at", Tue, 07 Oct 2014 12:21:52 UTC +00:00]]
+  [1m[36m (252.0ms)[0m  [1mCOMMIT[0m
+  [1m[35mSubscription Load (0.6ms)[0m  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1  [["id", 1]]
+  [1m[36mAcademicLevel Load (0.5ms)[0m  [1mSELECT "academic_levels".* FROM "academic_levels" WHERE "academic_levels"."id" = $1 LIMIT 1[0m  [["id", 1]]
+Completed 200 OK in 272ms (Views: 0.2ms | ActiveRecord: 259.2ms)
+
+
+Started GET "/ussd?sc=bxcb&msisdn=22540498869&user_input=1&session_id=3gfgddufgh&req_no=5&screen_id=4" for 127.0.0.1 at 2014-10-07 12:21:56 +0000
+Processing by SessionsController#index as HTML
+  Parameters: {"sc"=>"bxcb", "msisdn"=>"22540498869", "user_input"=>"1", "session_id"=>"3gfgddufgh", "req_no"=>"5", "screen_id"=>"4"}
+  [1m[35mSession Load (1.5ms)[0m  SELECT "sessions".* FROM "sessions" WHERE "sessions"."session_id" = '3gfgddufgh' LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36mSubscription Load (0.9ms)[0m  [1mSELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT 1[0m  [["id", 1]]
+  [1m[35mParameter Load (0.6ms)[0m  SELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "parameters".* FROM "parameters" ORDER BY "parameters"."id" ASC LIMIT 1[0m
+ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=22540498869&subscription_id=1&question_type_id=1&academic_level_id=1&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.390645
+ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/22540498869/1 response_code=200 return_code=ok total_time=35.795585
+Completed 200 OK in 36203ms (Views: 0.2ms | ActiveRecord: 3.7ms)
