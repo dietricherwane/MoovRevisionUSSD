@@ -207,7 +207,7 @@ class SessionsController < ApplicationController
     
     request = Typhoeus::Request.new(parameter.billing_url, followlocation: true, body: billing_request_body, headers: {Accept: "text/xml", :'Content-length' => billing_request_body.bytesize, Authorization: "Basic base64_encode('NGSER-MR2014:NGSER-MR2014')", :'User-Agent' => user_agent})
 
-=begin
+#=begin
     request.on_complete do |response|
       if response.success?
         result = response.body  
@@ -221,10 +221,10 @@ class SessionsController < ApplicationController
     end
 
     request.run
-=end
+#=end
     #response_body
-    @xml = Nokogiri.XML(Billing.response_body).xpath('//methodResponse//params//param//value//struct//member')
-    #@xml = Nokogiri.XML(result).xpath('//methodResponse//params//param//value//struct//member') rescue nil
+    #@xml = Nokogiri.XML(Billing.response_body).xpath('//methodResponse//params//param//value//struct//member')
+    @xml = Nokogiri.XML(result).xpath('//methodResponse//params//param//value//struct//member') rescue nil
     #render text: Billing.response_body.bytesize
   end
   
@@ -244,7 +244,7 @@ class SessionsController < ApplicationController
   end
   
   def send_first_question
-    request = Typhoeus::Request.new("localhost:4001/question/registration/send/#{@session.msisdn}/#{@session.academic_level_id.to_i}", followlocation: true, method: :get)
+    request = Typhoeus::Request.new("97.247.177.152:3779/question/registration/send/#{@session.msisdn}/#{@session.academic_level_id.to_i}", followlocation: true, method: :get)
 
     request.on_complete do |response|
       if response.success?
@@ -261,6 +261,39 @@ class SessionsController < ApplicationController
     end
 
     request.run
+  end
+  
+  def sms_billing
+    user_agent = request.env['HTTP_USER_AGENT']
+    transaction_id = params[:transaction_id]
+    msisdn = params[:msisdn]
+    price = params[:price]  
+    billing_request_body = Billing.sms_request_body(transaction_id, msisdn, price)
+    parameter = Parameter.first
+    
+    request = Typhoeus::Request.new(parameter.billing_url, followlocation: true, body: billing_request_body, headers: {Accept: "text/xml", :'Content-length' => billing_request_body.bytesize, Authorization: "Basic base64_encode('NGSER-MR2014:NGSER-MR2014')", :'User-Agent' => user_agent})
+
+#=begin
+    request.on_complete do |response|
+      if response.success?
+        result = response.body  
+      elsif response.timed_out?
+        result = Error.timeout(@screen_id)
+      elsif response.code == 0
+        result = Error.no_http_response(@screen_id)
+      else
+        result = Error.non_successful_http_response(@screen_id)
+      end
+    end
+
+    request.run
+#=end
+    #response_body
+    #@xml = Nokogiri.XML(Billing.response_body).xpath('//methodResponse//params//param//value//struct//member')
+    @xml = Nokogiri.XML(result).xpath('//methodResponse//params//param//value//struct//member') rescue nil
+    #render text: Billing.response_body.bytesize
+    
+    render text: (user_billed ? "1" : "0")
   end
   
 end

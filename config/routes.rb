@@ -6,6 +6,8 @@ MoovRevisionUssd::Application.routes.draw do
   get "ussd" => "sessions#index"
   
   get "billing" => "sessions#billing"
+  
+  get "sms_billing" => "sessions#sms_billing"
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
