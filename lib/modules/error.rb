@@ -41,7 +41,8 @@ module Error
   end
   
   def self.xml_skeleton(text, screen_id)
-    text = URI.escape(text)
+    #text = URI.escape(text)
+    text = text.force_encoding("utf-8")
     
     return "<?xml version='1.0' encoding='utf-8'?>
     <response>

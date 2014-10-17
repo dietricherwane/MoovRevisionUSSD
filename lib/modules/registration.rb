@@ -6,17 +6,17 @@ module Registration
   end
   
   def self.question_type_selection(screen_id)
-    return xml_skeleton("menu", "Choix du questionnaire:", [["1", "Révision scolaire"], ["2", "Culture générale"]], 0, "continue", screen_id)
+    return xml_skeleton("menu", "Choix du questionnaire:", [["1", "Révision scolaire"], ["2", "Culture générale"]], 1, "continue", screen_id)
   end
   
   def self.select_academic_level(screen_id)
-    return xml_skeleton("menu", "Niveau scolaire:", [["1", "6ème"], ["2", "5ème"], ["3", "4ème"], ["4", "3ème"], ["5", "2nde"], ["6", "1ère"], ["7", "Tle"]], 0, "continue", screen_id)
+    return xml_skeleton("menu", "Niveau scolaire:", [["1", "6ème"], ["2", "5ème"], ["3", "4ème"], ["4", "3ème"], ["5", "2nde"], ["6", "1ère"], ["7", "Tle"]], 1, "continue", screen_id)
   end
   
   def self.confirm_registration(session, screen_id)
     question_type = session.question_type
     subscription = session.subscription
-    return xml_skeleton("menu", "Vous avez opté pour MOOV REVISION - #{question_type.name}#{session.academic_level ? ' niveau: ' + session.academic_level.name : ''}. Vous serez débité de #{subscription.price} FCFA. Inscription valable pour #{subscription.duration} jour#{(subscription.duration > 1) ? 's' : ''}", [["1", "Confirmer"], ["2", "Annuler"]], 0, "continue", screen_id)
+    return xml_skeleton("menu", "Vous avez opté pour MOOV REVISION - #{question_type.name}#{session.academic_level ? ' niveau: ' + session.academic_level.name : ''}. Vous serez débité de #{subscription.price} FCFA. Inscription valable pour #{subscription.duration} jour#{(subscription.duration > 1) ? 's' : ''}", [["1", "Confirmer"], ["2", "Annuler"]], 1, "continue", screen_id)
   end
   
   def self.validate_registration(screen_id)
@@ -28,7 +28,8 @@ module Registration
   end
   
   def self.xml_skeleton(screen_type, text, menu_options, back_link, session_op, screen_id)
-    text = URI.escape(text)
+    #text = URI.escape(text)
+    text = text.force_encoding("utf-8")
     unless menu_options.blank?
       my_menu = get_menu(menu_options)
     end

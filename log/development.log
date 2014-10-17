@@ -21559,3 +21559,10 @@ Processing by SessionsController#index as HTML
 ETHON: performed EASY effective_url=http://localhost:4001/account/create?msisdn=22540498869&subscription_id=1&question_type_id=1&academic_level_id=1&session_id=3gfgddufgh&screen_id=4 response_code=200 return_code=ok total_time=0.390645
 ETHON: performed EASY effective_url=HTTP://localhost:4001/question/registration/send/22540498869/1 response_code=200 return_code=ok total_time=35.795585
 Completed 200 OK in 36203ms (Views: 0.2ms | ActiveRecord: 3.7ms)
+  [1m[36mActiveRecord::SchemaMigration Load (11.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateInputLogs (20141017162830)
+  [1m[35m (0.5ms)[0m  BEGIN
+  [1m[36m (361.3ms)[0m  [1mCREATE TABLE "input_logs" ("id" serial primary key, "content" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (2.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20141017162830"]]
+  [1m[36m (99.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.8ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
