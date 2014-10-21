@@ -28,8 +28,8 @@ module Registration
   end
   
   def self.xml_skeleton(screen_type, text, menu_options, back_link, session_op, screen_id)
-    #text = URI.escape(text)
-    text = text.force_encoding("utf-8")
+    text = URI.escape(text)
+    #text = text.force_encoding("utf-8")
     unless menu_options.blank?
       my_menu = get_menu(menu_options)
     end
