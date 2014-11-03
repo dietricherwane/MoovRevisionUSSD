@@ -44,7 +44,7 @@ class SessionsController < ApplicationController
       @user_input = params[:user_input].to_i
       @session_id = params[:session_id]
       @req_no = params[:req_no].to_i
-      @screen_id = params[:screen_id]
+      @screen_id = params[:screen_id].to_i
       InputLog.create(content: @user_input)
       true
     end
