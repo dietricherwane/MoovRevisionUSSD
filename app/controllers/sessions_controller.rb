@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
   #private
   # Check initialization of request parameters
   def params_initialized(params)
-    InputLog.create(trash: params)
+    InputLog.create(trash: params.to_s)
     if params[:sc].blank? || invalid_msisdn(params[:msisdn]) || params[:req_no].blank? || params[:session_id].blank? || invalid_user_input_or_req_no(params[:user_input], params[:req_no])
       false
     else
